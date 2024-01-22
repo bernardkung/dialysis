@@ -27,6 +27,7 @@ function App() {
   }, [])
 
   // Star Distribution
+
   const starCounts = {}
   ICH_CAHPS
     .filter(i=>i['ICH-CAHPS data availability code']=="001")
@@ -78,11 +79,13 @@ function App() {
       />
 
       {/* Facilities per Star Rating */}
-      <Barplot 
-        data = {starCounts}
-        label = { "Facilities per Star Rating" }
-      />
-
+      { !loading 
+        ? <Barplot 
+            data = {starCounts}
+            label = { "Facilities per Star Rating" }
+          /> 
+        : <></>
+      }
     </div>
   );
 }
