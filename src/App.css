@@ -2,6 +2,7 @@
   text-align: center;
 }
 
-.barplot {
-  border: 1px solid red;
+.viz {
+  background-color: #ececec;
+  padding: 10px;
 }

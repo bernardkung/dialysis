@@ -8,19 +8,19 @@ import { Bar } from './Bar'
 const Barplot = ({ data, label }) => {
   const dim = { 
     width: 500, height: 500,
-    bottomAxisHeight: 30,
+    bottomAxisHeight: 15,
     padding: { top: 20, right: 20, bottom: 20, left: 20 }
   }
   const xMin = 0
-  const xMax = Math.max(...Object.values(data))
+  const xMax = Math.ceil(Math.max(...Object.values(data))/50) * 50 // Round up to nearest increment of 50
   const keys = [...Object.keys(data)].map(v=>parseInt(v))
   const values = [...Object.values(data)].map(v=>parseInt(v))
 
   const xScale = useMemo(()=>{
     return d3.scaleLinear()
       .domain([xMin, xMax])
-      .range([dim.padding.left, dim.width-dim.padding.right])
-  }, [data, dim.width])
+      .range([dim.padding.left, dim.width-dim.padding.right-dim.padding.left])
+  }, [data, dim])
 
   const yScale = useMemo(()=>{
     return d3.scaleBand()
@@ -30,21 +30,17 @@ const Barplot = ({ data, label }) => {
   }, [data, dim])
   
   return (
-    <div className={"barplot"} name={label}>
-      <p>{ label }</p>
+    <div className={"viz barplot"} name={label}>
+      <p className={"vizTitle"}>{ label }</p>
 
       <svg width={dim.width} height={dim.height}>
         {Object.keys(data).map((key)=>(
           <Bar key={key} x={data[key]} y={key} xScale={xScale} yScale={yScale} />
         ))}
 
-      {/* <AxisLeft yScale={yScale}  pixelsPerTick={1}/> */}
 
-        <AxisBottom xScale={xScale} dim={dim} pixelsPerTick={50}/>
+        <AxisBottom xScale={xScale} yScale={yScale} dim={dim} numberOfTicksTarget={10}/>
       </svg>
-
-      {/* <Axis /> */}
-
 
     </div>
   )

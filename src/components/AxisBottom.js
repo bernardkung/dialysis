@@ -2,26 +2,26 @@ import { useMemo } from "react";
 // import { ScaleLinear } from "d3";
 
 
-export const AxisBottom = ({ xScale, dim, pixelsPerTick, tickLength = 6}) => {
-  const range = xScale.range()
+export const AxisBottom = ({ xScale, yScale, dim, numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
-    const width = range[1] - range[0]
-    const numberOfTicksTarget = Math.floor(width / pixelsPerTick)
-
     return xScale.ticks(numberOfTicksTarget).map((value) => ({
       value: value,
       xOffset: xScale(value),
     }))
   }, [xScale]);
 
-  const yLoc = dim.height - dim.padding.bottom - 13
+  // const yLoc = dim.height - dim.padding.bottom - 13
+  const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
+
+
+  console.log(yScale(0))
 
   return (
-    <g>
+    <g className="bottomAxis">
       {/* Main horizontal line */}
       <path
-        d={["M", range[0], yLoc, "L", range[1],yLoc].join(" ")}
+        d={["M", xScale.range()[0], yLoc, "L", xScale.range()[1], yLoc].join(" ")}
         fill="none"
         stroke="currentColor"
       />
@@ -31,7 +31,7 @@ export const AxisBottom = ({ xScale, dim, pixelsPerTick, tickLength = 6}) => {
         <g key={value} transform={`translate(${xOffset}, ${yLoc})`}>
           <line y2={tickLength} stroke="currentColor" />
           <text
-            key={value}
+            key={ value }
             style={{
               fontSize: "10px",
               textAnchor: "middle",

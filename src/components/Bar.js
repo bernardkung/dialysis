@@ -1,13 +1,12 @@
 export const Bar = ({x, y, xScale, yScale})=>{
 
-  
   return (
-  <g key={y + "Stars"}>
+  <g key={y + "Stars"} className={"bar"}>
     <rect 
       key={y + "StarsBar"}
       x={xScale(0)}
       y={yScale(parseInt(y))}
-      width={xScale(x)}
+      width={xScale(x)-xScale(0)}
       height={yScale.bandwidth()}
       opacity={0.7}
       stroke="#9d174d"
