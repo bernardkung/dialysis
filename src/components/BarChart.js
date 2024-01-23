@@ -5,7 +5,7 @@ import { AxisBottom } from './AxisBottom'
 import { Axis } from './Axis'
 import { Bar } from './Bar'
 
-const Barplot = ({ data, label }) => {
+const BarChart = ({ data, label }) => {
   const dim = { 
     width: 500, height: 500,
     bottomAxisHeight: 15,
@@ -30,7 +30,7 @@ const Barplot = ({ data, label }) => {
   }, [data, dim])
   
   return (
-    <div className={"viz barplot"} name={label}>
+    <div className={"viz barchart"} name={label}>
       <p className={"vizTitle"}>{ label }</p>
 
       <svg width={dim.width} height={dim.height}>
@@ -46,4 +46,4 @@ const Barplot = ({ data, label }) => {
   )
 }
 
-export default Barplot
+export default BarChart

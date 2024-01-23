@@ -11,11 +11,8 @@ export const AxisBottom = ({ xScale, yScale, dim, numberOfTicksTarget, tickLengt
     }))
   }, [xScale]);
 
-  // const yLoc = dim.height - dim.padding.bottom - 13
-  const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
-
-
-  console.log(yScale(0))
+  const yLoc = dim.height - dim.padding.bottom - 13
+  // const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
 
   return (
     <g className="bottomAxis">
