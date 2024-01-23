@@ -39,44 +39,46 @@ function App() {
   
 
   return (
-    <div className="App">
+    <div className="App flexCol">
 
-      {/* Count Facilities */}
-      <Card value={DFC.length} label={'# Facilities'} />
-      
-      {/* Count Dialysis Stations */}
-      <Card 
-        value={
-          DFC.reduce(
-            (acc, curr)=>acc + parseInt(curr['# of Dialysis Stations']), 
-            0
-          )
-        } 
-        label={'# Dialysis Stations'} 
-      />  
-
-      {/* Count Star Rating Surveys */}
-      <Card 
-        value={ICH_CAHPS
-          .filter(curr=>curr['ICH-CAHPS data availability code']=="001")
-          .length} 
-        label={'# Star Ratings'} 
-      />
-
-      {/* Average Star Rating */}
-      <Card 
-        value={Math.round(
-          10*(ICH_CAHPS
-            .filter(curr=>curr['ICH-CAHPS data availability code']=="001")
-            .reduce(
-              (acc, curr)=>acc + parseInt(curr['Star rating of the dialysis facility']), 
+      <div className={"cardContainer flexRow"}>
+        {/* Count Facilities */}
+        <Card value={DFC.length} label={'# Facilities'} />
+        
+        {/* Count Dialysis Stations */}
+        <Card 
+          value={
+            DFC.reduce(
+              (acc, curr)=>acc + parseInt(curr['# of Dialysis Stations']), 
               0
-            ) / ICH_CAHPS
+            )
+          } 
+          label={'# Dialysis Stations'} 
+        />  
+
+        {/* Count Star Rating Surveys */}
+        <Card 
+          value={ICH_CAHPS
             .filter(curr=>curr['ICH-CAHPS data availability code']=="001")
-            .length
-          ))/10} 
-        label={'Avg Star Rating'} 
-      />
+            .length} 
+          label={'# Star Ratings'} 
+        />
+
+        {/* Average Star Rating */}
+        <Card 
+          value={Math.round(
+            10*(ICH_CAHPS
+              .filter(curr=>curr['ICH-CAHPS data availability code']=="001")
+              .reduce(
+                (acc, curr)=>acc + parseInt(curr['Star rating of the dialysis facility']), 
+                0
+              ) / ICH_CAHPS
+              .filter(curr=>curr['ICH-CAHPS data availability code']=="001")
+              .length
+            ))/10} 
+          label={'Avg Star Rating'} 
+        />
+      </div>
 
       {/* Facilities per Star Rating */}
       { !loading 

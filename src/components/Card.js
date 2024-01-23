@@ -4,7 +4,7 @@ const Card = ({ value, label }) => {
   return (
     <div className={"card viz"}>
       <p>{ String(value) }</p>
-      <p>{ label }</p>
+      <p className={"vizTitle"}>{ label }</p>
     </div>
   )
 }

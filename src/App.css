@@ -2,7 +2,31 @@
   text-align: center;
 }
 
+.flexCol {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flexRow {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
 .viz {
   background-color: #ececec;
   padding: 10px;
+  border-radius: 3px;
+}
+
+.vizTitle {
+  font-weight: 600;
+}
+
+.card {
+  height: 80px;
+  width: 160px;
 }
