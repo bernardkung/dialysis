@@ -2,6 +2,7 @@ import * as d3 from "d3";
 import { useMemo } from "react";
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
+import { Circle } from './Circle';
 
 const ScatterChart = ({ data, label, dims, colors }) => {
 
@@ -19,7 +20,7 @@ const ScatterChart = ({ data, label, dims, colors }) => {
   const yMin = 0
   const yMax = 100
 
-  console.log(mortalityRates, totalPerformanceScores)
+  // console.log(mortalityRates, totalPerformanceScores)
 
   const xScale = useMemo(()=>{
     return d3.scaleLinear()
@@ -32,20 +33,41 @@ const ScatterChart = ({ data, label, dims, colors }) => {
       .domain([yMin, yMax])
       .range([dims.height-dims.padding.bottom-dims.bottomAxisHeight, dims.padding.top])
   }, [data, dims])
-  
 
+  const colorScale = useMemo(()=>{
+    return {
+      "Fresenius"   : colors[0],
+      "DaVita"      : colors[1],
+      "Independent" : colors[2],
+      "Other"       : colors[3],
+    }
+  })
+  
+  console.log(colorScale[data[0].chainOrganization])
+  
   return (
     <div className={"viz scatterChart"} name={label}>
       <p className={"vizTitle"}>{ label }</p>
 
       <svg width={dims.width} height={dims.height}>
         
-
+      <AxisBottom axisLabel={"Total Performance Score"} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+      <AxisLeft xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+      
+      {data.map((element, index)=>(
+        <Circle 
+          key = { index } 
+          cx = { element.totalPerformanceScore }
+          cy = { element.mortalityRate }
+          radius = { 2 }
+          fill={ colorScale[element.chainOrganization] }
+          xScale = { xScale } 
+          yScale = { yScale } 
+        />
+      ))}
 
 
         
-        <AxisBottom xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
-        <AxisLeft xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
       </svg>
 
     </div>

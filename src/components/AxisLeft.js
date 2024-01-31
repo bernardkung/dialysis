@@ -13,8 +13,6 @@ export const AxisLeft = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength
 
   const xLoc = dims.padding.left
 
-  
-  console.log(xLoc)
 
   return (
     <g className="leftAxis">
