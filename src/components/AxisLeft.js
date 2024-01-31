@@ -2,48 +2,46 @@ import { useMemo } from "react";
 import { ScaleLinear } from "d3";
 
 
-export const AxisLeft = ({ yScale, pixelsPerTick, width, tickLength = 6 }) => {
-  const range = yScale.range();
+export const AxisLeft = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
-    const height = range[0] - range[1];
-    // const numberOfTicksTarget = Math.floor(height / pixelsPerTick);
-    const numberOfTicksTarget = 5
-
     return yScale.ticks(numberOfTicksTarget).map((value) => ({
-      value,
+      value: value,
       yOffset: yScale(value),
-    }));
+    }))
   }, [yScale]);
 
+  const xLoc = dims.padding.left
+
+  
+  console.log(xLoc)
+
   return (
-    <>
+    <g className="leftAxis">
+      {/* Main Axis Line */}
+      <path
+        d={["M", xLoc, yScale.range()[0], "L", xLoc, yScale.range()[1]].join(" ")}
+        fill="none"
+        stroke="currentColor"
+      />
+
       {/* Ticks and labels */}
       {ticks.map(({ value, yOffset }) => (
-        <g
-          key={value}
-          transform={"translate(0, {yOffset})"} // TODO struggling with back ticks
-          shapeRendering={"crispEdges"}
-        >
-          <line
-            x1={-tickLength}
-            x2={width + tickLength}
-            stroke="#D2D7D3"
-            strokeWidth={0.5}
-          />
+        <g key={value} transform={`translate(${xLoc-tickLength}, ${yOffset})`}>
+          <line x2={tickLength} stroke="currentColor" />
           <text
-            key={value}
+            key={ value }
             style={{
               fontSize: "10px",
               textAnchor: "middle",
-              transform: "translateX(-20px)",
-              fill: "#D2D7D3",
+              transform: "translateX(-13px)",
             }}
           >
-            {value}
+          { value }
           </text>
         </g>
       ))}
-    </>
+      
+    </g>
   );
 };

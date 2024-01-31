@@ -5,12 +5,7 @@ import { AxisBottom } from './AxisBottom'
 import { Axis } from './Axis'
 import { Bar } from './Bar'
 
-const BarChart = ({ data, label }) => {
-  const dim = { 
-    width: 500, height: 500,
-    bottomAxisHeight: 15,
-    padding: { top: 20, right: 20, bottom: 20, left: 20 }
-  }
+const BarChart = ({ data, label, dims }) => {
   const xMin = 0
   const xMax = Math.ceil(Math.max(...Object.values(data))/50) * 50 // Round up to nearest increment of 50
   const keys = [...Object.keys(data)].map(v=>parseInt(v))
@@ -19,27 +14,27 @@ const BarChart = ({ data, label }) => {
   const xScale = useMemo(()=>{
     return d3.scaleLinear()
       .domain([xMin, xMax])
-      .range([dim.padding.left, dim.width-dim.padding.right-dim.padding.left])
-  }, [data, dim])
+      .range([dims.padding.left, dims.width-dims.padding.right-dims.padding.left])
+  }, [data, dims])
 
   const yScale = useMemo(()=>{
     return d3.scaleBand()
       .domain(keys)
-      .range([dim.height-dim.padding.bottom-dim.bottomAxisHeight, dim.padding.top])
+      .range([dims.height-dims.padding.bottom-dims.bottomAxisHeight, dims.padding.top])
       .padding(0.1)
-  }, [data, dim])
+  }, [data, dims])
   
   return (
     <div className={"viz barchart"} name={label}>
       <p className={"vizTitle"}>{ label }</p>
 
-      <svg width={dim.width} height={dim.height}>
+      <svg width={dims.width} height={dims.height}>
         {Object.keys(data).map((key)=>(
           <Bar key={key} x={data[key]} y={key} xScale={xScale} yScale={yScale} />
         ))}
 
 
-        <AxisBottom xScale={xScale} yScale={yScale} dim={dim} numberOfTicksTarget={10}/>
+        <AxisBottom xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
       </svg>
 
     </div>

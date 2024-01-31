@@ -2,7 +2,7 @@ import { useMemo } from "react";
 // import { ScaleLinear } from "d3";
 
 
-export const AxisBottom = ({ xScale, yScale, dim, numberOfTicksTarget, tickLength = 5}) => {
+export const AxisBottom = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
     return xScale.ticks(numberOfTicksTarget).map((value) => ({
@@ -11,7 +11,7 @@ export const AxisBottom = ({ xScale, yScale, dim, numberOfTicksTarget, tickLengt
     }))
   }, [xScale]);
 
-  const yLoc = dim.height - dim.padding.bottom - 13
+  const yLoc = dims.height - dims.padding.bottom - 13
   // const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
 
   return (
