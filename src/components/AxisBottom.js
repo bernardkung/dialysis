@@ -14,8 +14,6 @@ export const AxisBottom = ({ xScale, yScale, dims, numberOfTicksTarget, tickLeng
   const yLoc = dims.height - dims.padding.bottom - 13
   // const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
 
-  console.log(`translate(${(xScale.range()[1])/2}, ${yLoc})`)
-
   return (
     <g className="bottomAxis">
       {/* Main horizontal line */}
@@ -24,20 +22,6 @@ export const AxisBottom = ({ xScale, yScale, dims, numberOfTicksTarget, tickLeng
         fill="none"
         stroke="currentColor"
       />
-
-      {/* Axis Label */}
-      { axisLabel 
-        ? <g
-          style={{
-            fontSize: "10px",
-            textAnchor: "middle",
-            transform: `translate(${(xScale.range()[1])/2}, ${yLoc})`,
-          }}
-          >
-            <text>{axisLabel}</text>
-          </g>
-        : <></>
-      }
 
       {/* Ticks and labels */}
       {ticks.map(({ value, xOffset }) => (
@@ -56,6 +40,23 @@ export const AxisBottom = ({ xScale, yScale, dims, numberOfTicksTarget, tickLeng
         </g>
       ))}
       
+      {/* Axis Label */}
+      <g
+        transform= {`translate(${dims.padding.left+(xScale.range()[1])/2}, ${yLoc + 35})`}
+      >
+        { axisLabel 
+          ? <text
+            style={{
+              fontSize: "10px",
+              textAnchor: "middle",
+              transform: `translate(${(xScale.range()[1])/2}, ${yLoc})`,
+            }}
+            >
+              {axisLabel}
+            </text>
+          : <></>
+        }
+      </g>
     </g>
   );
 };

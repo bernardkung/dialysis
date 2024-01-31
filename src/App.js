@@ -22,7 +22,7 @@ function App() {
     bottomAxisHeight: 15,
     innerRadius: 120,
     outerRadius: 220,
-    padding: { top: 20, right: 20, bottom: 20, left: 30 }
+    padding: { top: 30, right: 20, bottom: 30, left: 40 }
   }
   const colors = [
     "#e0ac2b",
