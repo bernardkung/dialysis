@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 
 export const AxisBottom = ({ 
-  xScale, yScale, 
+  xScale, yScale, scale,
   dims, axisLabel,
   numberOfTicksTarget, tickLength = 5}) => {
 
@@ -16,12 +16,17 @@ export const AxisBottom = ({
 
   const yLoc = dims.height - dims.padding.bottom - 13
   // const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
+  const axisStart= scale.range()[0]
+  const axisStop = scale.range()[1]
+  const axisWidth= axisStop - axisStart
+  const linePath = ["M", xScale.range()[0], yLoc, "L", xScale.range()[1], yLoc].join(" ")
+
 
   return (
     <g className="bottomAxis">
       {/* Main horizontal line */}
       <path
-        d={["M", xScale.range()[0], yLoc, "L", xScale.range()[1], yLoc].join(" ")}
+        d={linePath}
         fill="none"
         stroke="currentColor"
       />

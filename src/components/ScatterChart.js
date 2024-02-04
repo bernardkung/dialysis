@@ -51,8 +51,8 @@ const ScatterChart = ({ data, label, dims, colors }) => {
 
       <svg width={dims.width} height={dims.height}>
         
-      <AxisBottom axisLabel={"Total Performance Score"} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
-      <AxisLeft axisLabel={"Morbidity Rate"} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+      <AxisBottom axisLabel={"Total Performance Score"} scale={xScale} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+      <AxisLeft axisLabel={"Morbidity Rate"} scale={yScale} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
       
       {data.map((element, index)=>(
         <Circle 

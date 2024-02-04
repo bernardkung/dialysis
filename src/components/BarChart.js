@@ -34,7 +34,7 @@ const BarChart = ({ data, label, dims }) => {
         ))}
 
 
-        <AxisBottom xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+        <AxisBottom scale={xScale} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
       </svg>
 
     </div>
