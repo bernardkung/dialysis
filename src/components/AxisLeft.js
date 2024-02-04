@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { ScaleLinear } from "d3";
 
 
-export const AxisLeft = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength = 5}) => {
+export const AxisLeft = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength = 5, axisLabel}) => {
 
   const ticks = useMemo(() => {
     return yScale.ticks(numberOfTicksTarget).map((value) => ({
@@ -40,6 +40,27 @@ export const AxisLeft = ({ xScale, yScale, dims, numberOfTicksTarget, tickLength
         </g>
       ))}
       
+
+      {/* Axis Label */}
+      <g
+        transform= {`translate(${xLoc-32}, ${(yScale.range()[0])/2})`}
+      >
+        { axisLabel 
+          ? <text
+            transform= "rotate(270)"
+            style={{
+              fontSize: "10px",
+              textAnchor: "middle",  
+            }
+          }
+            >
+              {axisLabel}
+            </text>
+          : <></>
+        }
+      </g>
+
+
     </g>
   );
 };
