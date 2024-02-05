@@ -2,23 +2,17 @@ import { useMemo } from "react";
 // import { ScaleLinear } from "d3";
 
 
-export const AxisBottom = ({ 
-  scale, axisOrientation,
+export const Axis = ({ 
+  scale, axisPosition,
   dims, axisLabel,
   numberOfTicksTarget, tickLength = 5}) => {
 
-  const ticks = useMemo(() => {
-    return scale.ticks(numberOfTicksTarget).map((value) => ({
-      value: value,
-      xOffset: scale(value),
-    }))
-  }, [scale]);
-
   // const yLoc = dim.height - dim.padding.bottom - dim.bottomAxisHeight
-  const axisStart = axisOrientation in ["left", "right"] ? scale.range()[1] : scale.range()[0]
-  const axisStop = axisOrientation in ["left", "right"] ? scale.range()[1] : scale.range()[0]
+  const axisOrientation = ["left", "right"].includes(axisPosition) ? "vertical" : "horizontal"
+  const axisStart = axisOrientation == "vertical" ? scale.range()[1] : scale.range()[0]
+  const axisStop = axisOrientation == "vertical" ? scale.range()[1] : scale.range()[0]
   const axisWidth = axisStop - axisStart
-  const axisCenter = axisOrientation in ["left", "right"] 
+  const axisCenter = axisOrientation == "vertical"
     ? dims.padding.top+(axisStop)/2 
     : dims.padding.left+(axisStop)/2
   const axisOffset = {
@@ -27,35 +21,48 @@ export const AxisBottom = ({
       "bottom" : dims.height - dims.padding.bottom - 13,
       "left"   : dims.padding.left,
     }
+  const offsetType = axisOrientation == "horizontal" ? "xOffset" : "yOffset"
+  // console.log("o:", axisPosition, ["left", "right"].includes(axisPosition), axisOrientation, offsetType)
 
-    // axisOrientation in ["left", "right"] 
-    // ? dims.padding.left
-    // : dims.height - dims.padding.bottom - 13
+  const ticks = useMemo(() => {
+    return scale.ticks(numberOfTicksTarget).map((value) => ({
+      value: value,
+      [offsetType]: scale(value),
+    }))
+  }, [scale]);
+    
   const axisPath = {
-    "top"    : ["M", scale.range()[0], axisOffset, "L", scale.range()[1], axisOffset].join(" "),
-    "right"  : ["M", scale.range()[0], axisOffset, "L", scale.range()[1], axisOffset].join(" "),
-    "bottom" : ["M", scale.range()[0], axisOffset, "L", scale.range()[1], axisOffset].join(" "),
-    "left"   : ["M", scale.range()[0], axisOffset, "L", scale.range()[1], axisOffset].join(" "),
+    "top"    : ["M", scale.range()[0], axisOffset[axisPosition], "L", scale.range()[1], axisOffset[axisPosition]].join(" "),
+    "right"  : ["M", axisOffset[axisPosition], scale.range()[0], "L", axisOffset[axisPosition], scale.range()[1]].join(" "),
+    "bottom" : ["M", scale.range()[0], axisOffset[axisPosition], "L", scale.range()[1], axisOffset[axisPosition]].join(" "),
+    "left"   : ["M", axisOffset[axisPosition], scale.range()[0], "L", axisOffset[axisPosition], scale.range()[1]].join(" "),
   }
+
+  console.log(ticks)
+
   return (
-    <g className={"axis " + axisOrientation}>
+    <g className={"axis " + axisPosition}>
       {/* Main horizontal line */}
       <path
-        d={axisPath}
+        d={axisPath[axisPosition]}
         fill="none"
         stroke="currentColor"
       />
 
       {/* Ticks and labels */}
-      {ticks.map(({ value, xOffset }) => (
-        <g key={value} transform={`translate(${xOffset}, ${axisOffset})`}>
-          <line y2={tickLength} stroke="currentColor" />
+      {ticks.map(({ value, yOffset }) => (
+        // <g key={value} transform={axisOrientation=="vertical" 
+        //     ? `translate(${xOffset}, ${axisOffset})`
+        //     : `translate(${axisOffset}, ${yOffset})`
+        //   }>        
+          <g key={value} transform={`translate(${axisOffset[axisPosition]}, ${yOffset})`}>
+          <line x2={-tickLength} stroke="currentColor" />
           <text
             key={ value }
             style={{
               fontSize: "10px",
               textAnchor: "middle",
-              transform: "translateY(20px)",
+              transform: `translateY(${ ["left", "right"].includes(axisPosition) ? "-" : "" }20px)`,
             }}
           >
           { value }
