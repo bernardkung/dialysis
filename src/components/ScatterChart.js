@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import { AxisBottom } from './AxisBottom';
 import { AxisLeft } from './AxisLeft';
 import { VerticalAxis } from './VerticalAxis';
+import { HorizontalAxis } from './HorizontalAxis';
 import { Axis } from './Axis';
 import { Circle } from './Circle';
 
@@ -53,10 +54,10 @@ const ScatterChart = ({ data, label, dims, colors }) => {
 
       <svg width={dims.width} height={dims.height}>
         
-      <AxisBottom axisLabel={"Total Performance Score"} scale={xScale} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+        
+      <HorizontalAxis axisLabel={"Total Performance Score"} scale={xScale} axisPosition={"bottom"} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
       <VerticalAxis axisLabel={"Morbidity Rate"} scale={yScale} axisPosition={"left"} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
-      {/* <AxisLeft axisLabel={"Morbidity Rate"} scale={yScale} axisPosition={"left"} yScale={yScale} dims={dims} numberOfTicksTarget={10}/> */}
-      {/* <Axis axisLabel={"Morbidity Rate"} scale={yScale} axisPosition={"left"} dims={dims} numberOfTicksTarget={10}/> */}
+
       {data.map((element, index)=>(
         <Circle 
           key = { index } 

@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { ScaleLinear } from "d3";
 
 
-export const VerticalAxis = ({ yScale, dims, axisLabel, axisPosition, numberOfTicksTarget, tickLength = 5}) => {
+export const VerticalAxis = ({ yScale, dims, axisLabel, axisPosition="left", numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
     return yScale.ticks(numberOfTicksTarget).map((value) => ({
@@ -11,16 +11,15 @@ export const VerticalAxis = ({ yScale, dims, axisLabel, axisPosition, numberOfTi
     }))
   }, [yScale]);
 
-  const axisOffset = axisPosition=="left" ? dims.padding.left : dims.width - dims.padding.right - dims.padding.left
-  const tickXTransform = axisPosition=="left" ? axisOffset - tickLength : axisOffset + tickLength
-  const tickVector = axisPosition=="left" ? tickLength : -tickLength
-  const textTransform = axisPosition=="left" ? `-10px` : `10px`
-  const titleRotate = axisPosition=="left" ? 270 : 90
-  const titleOffset = axisPosition=="left" ? axisOffset-32 : axisOffset+32
+  const axisOffset      = axisPosition=="left" ? dims.padding.left : dims.width - dims.padding.right - dims.padding.left
+  const tickXTransform  = axisPosition=="left" ? axisOffset - tickLength : axisOffset + tickLength
+  const tickVector      = axisPosition=="left" ? tickLength : -tickLength
+  const textTransform   = axisPosition=="left" ? `-10px` : `10px`
+  const titleRotate     = axisPosition=="left" ? 270 : 90
+  const titleOffset     = axisPosition=="left" ? axisOffset-32 : axisOffset+32
 
-  console.log(axisPosition, textTransform)
   return (
-    <g className={"axis vertical " + axisPosition}>
+    <g className={`axis horizontal ${axisPosition}`}>
       {/* Main Axis Line */}
       <path
         d={["M", axisOffset, yScale.range()[0], "L", axisOffset, yScale.range()[1]].join(" ")}

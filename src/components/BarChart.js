@@ -1,7 +1,8 @@
 import * as d3 from "d3"
 import { useMemo } from "react"
-import { AxisBottom } from './AxisBottom'
+// import { AxisBottom } from './AxisBottom'
 // import { AxisLeft } from './AxisLeft'
+import { HorizontalAxis } from './HorizontalAxis';
 import { Axis } from './Axis'
 import { Bar } from './Bar'
 
@@ -34,7 +35,7 @@ const BarChart = ({ data, label, dims }) => {
         ))}
 
 
-        <AxisBottom scale={xScale} xScale={xScale} yScale={yScale} dims={dims} numberOfTicksTarget={10}/>
+        <HorizontalAxis scale={xScale} xScale={xScale} axisLabel={"# of Facilities"} dims={dims} numberOfTicksTarget={10}/>
       </svg>
 
     </div>

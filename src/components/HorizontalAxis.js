@@ -2,7 +2,7 @@ import { useMemo } from "react";
 // import { ScaleLinear } from "d3";
 
 
-export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition, numberOfTicksTarget, tickLength = 5}) => {
+export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition="bottom", numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
     return xScale.ticks(numberOfTicksTarget).map((value) => ({
@@ -11,33 +11,30 @@ export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition, numberOf
     }))
   }, [xScale]);
 
-  const axisOffset = dims.height - dims.padding.bottom - 13
-  // const axisOffset = dim.height - dim.padding.bottom - dim.bottomAxisHeight
-  const axisStart= scale.range()[0]
-  const axisStop = scale.range()[1]
-  const axisWidth= axisStop - axisStart
-  const linePath = ["M", xScale.range()[0], yLoc, "L", xScale.range()[1], yLoc].join(" ")
-
-
+  const axisOffset      = axisPosition=="bottom" ? dims.height - dims.padding.bottom - 13 : dims.padding.top
+  const tickYTransform  = axisPosition=="bottom" ? axisOffset - tickLength : axisOffset + tickLength
+  const tickVector      = axisPosition=="bottom" ? tickLength : -tickLength
+  const textTransform   = axisPosition=="bottom" ? `18px` : `-12px`
+  const titleOffset     = axisPosition=="bottom" ? axisOffset+32 : axisOffset-32
   return (
-    <g className="bottomAxis">
+    <g className={`axis horizontal ${axisPosition}`}>
       {/* Main horizontal line */}
       <path
-        d={linePath}
+        d={["M", xScale.range()[0], axisOffset, "L", xScale.range()[1], axisOffset].join(" ")}
         fill="none"
         stroke="currentColor"
       />
 
       {/* Ticks and labels */}
       {ticks.map(({ value, xOffset }) => (
-        <g key={value} transform={`translate(${xOffset}, ${yLoc})`}>
-          <line y2={tickLength} stroke="currentColor" />
+        <g key={value} transform={`translate(${xOffset}, ${axisOffset})`}>
+          <line y2={tickVector} stroke="currentColor" />
           <text
             key={ value }
             style={{
               fontSize: "10px",
               textAnchor: "middle",
-              transform: "translateY(20px)",
+              transform: `translateY(${textTransform})`,
             }}
           >
           { value }
@@ -47,14 +44,14 @@ export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition, numberOf
       
       {/* Axis Label */}
       <g
-        transform= {`translate(${dims.padding.left+(xScale.range()[1])/2}, ${yLoc + 35})`}
+        transform= {`translate(${dims.padding.left+(xScale.range()[1])/2}, ${axisOffset + 35})`}
       >
         { axisLabel 
           ? <text
             style={{
               fontSize: "10px",
               textAnchor: "middle",
-              transform: `translate(${(xScale.range()[1])/2}, ${yLoc})`,
+              transform: `translate(${(xScale.range()[1])/2}, ${titleOffset})`,
             }}
             >
               {axisLabel}
