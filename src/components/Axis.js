@@ -38,7 +38,7 @@ export const Axis = ({
     "left"   : ["M", axisOffset[axisPosition], scale.range()[0], "L", axisOffset[axisPosition], scale.range()[1]].join(" "),
   }
 
-  console.log(ticks)
+  ticks.map((tick, index)=>{console.log("T:", tick, "V:", tick['value'], "O:", tick[offsetType])})
 
   return (
     <g className={"axis " + axisPosition}>
@@ -50,22 +50,19 @@ export const Axis = ({
       />
 
       {/* Ticks and labels */}
-      {ticks.map(({ value, yOffset }) => (
-        // <g key={value} transform={axisOrientation=="vertical" 
-        //     ? `translate(${xOffset}, ${axisOffset})`
-        //     : `translate(${axisOffset}, ${yOffset})`
-        //   }>        
-          <g key={value} transform={`translate(${axisOffset[axisPosition]}, ${yOffset})`}>
+      {ticks.map(({ tick, index }) => ( 
+          
+          <g key={index} transform={`translate(${axisOffset[axisPosition]}, ${tick})`} data={tick}>
           <line x2={-tickLength} stroke="currentColor" />
           <text
-            key={ value }
+            key={ index }
             style={{
               fontSize: "10px",
               textAnchor: "middle",
               transform: `translateY(${ ["left", "right"].includes(axisPosition) ? "-" : "" }20px)`,
             }}
           >
-          { value }
+          { tick }
           </text>
         </g>
       ))}
