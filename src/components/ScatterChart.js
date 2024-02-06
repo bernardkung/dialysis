@@ -43,7 +43,6 @@ const ScatterChart = ({ data, label, dims, colors }) => {
     }
   })
   
-  console.log(colorScale[data[0].chainOrganization])
   
   return (
     <div className={"viz scatterChart"} name={label}>

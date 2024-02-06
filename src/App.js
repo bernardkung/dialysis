@@ -6,6 +6,7 @@ import BarChart from './components/BarChart'
 import PieChart from './components/PieChart'
 import LineChart from './components/PieChart'
 import ScatterChart from './components/ScatterChart'
+import TimeSeries from './components/TimeSeries'
 // import round from 'Math'
 
 
@@ -74,7 +75,7 @@ function App() {
       starCounts[starRating] =  starCounts[starRating] ? starCounts[starRating] + 1 : 1
     })
 
-  // Ownership Distributionrange;
+  // Ownership Distribution
   const ownershipCounts = {}
   ICH_CAHPS
     .map(i=>{
@@ -86,6 +87,7 @@ function App() {
     return {owner:key, value: ownershipCounts[key]}
   })
 
+  // Survival x Mortality
   const survivalMortalityData = QIP.map( (q, i)=>{
     const qipCCN = q['CMS Certification Number (CCN)']
     const qipTPS = q['Total Performance Score']
@@ -104,6 +106,20 @@ function App() {
       chainOrganization: simplifyOwnership(DFCClinic['Chain Organization'])
     }
   }).filter(q=>q)
+
+  // Certification Time Series data
+  const customTimeParser  = d3.timeParse("%d%b%Y")
+  
+  const certificationDict = DFC.reduce((acc,val)=>{
+    const certDate = customTimeParser( val['Certification Date'] )
+    acc[certDate] = acc[certDate] === undefined ? 1 : acc[certDate] += 1
+    return acc
+  }, {})
+  const certificationData = Object.keys(certificationDict).map((v, i)=>{
+    return {date: v, count: certificationDict[v]}
+  })
+
+  console.log(certificationData)
 
 
   return (
@@ -147,6 +163,16 @@ function App() {
           label={'Avg Star Rating'} 
         />
       </div>
+
+      {/* Certifications over Time */}
+      { !loading
+        ? <TimeSeries 
+            data = {{}}
+            label = { "Certifications over Time" }
+            dims = { dims }
+          />
+        : <></>
+      }
 
       {/* Facilities per Star Rating */}
       { !loading 
