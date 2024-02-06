@@ -1,9 +1,6 @@
 import * as d3 from "d3"
 import { useMemo } from "react"
-// import { AxisBottom } from './AxisBottom'
-// import { AxisLeft } from './AxisLeft'
 import { HorizontalAxis } from './HorizontalAxis';
-import { Axis } from './Axis'
 import { Bar } from './Bar'
 
 const BarChart = ({ data, label, dims }) => {

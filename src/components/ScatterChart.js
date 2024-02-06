@@ -1,10 +1,7 @@
 import * as d3 from "d3";
 import { useMemo } from "react";
-import { AxisBottom } from './AxisBottom';
-import { AxisLeft } from './AxisLeft';
 import { VerticalAxis } from './VerticalAxis';
 import { HorizontalAxis } from './HorizontalAxis';
-import { Axis } from './Axis';
 import { Circle } from './Circle';
 
 const ScatterChart = ({ data, label, dims, colors }) => {
