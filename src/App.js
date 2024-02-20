@@ -109,20 +109,35 @@ function App() {
 
   // Certification Time Series data
   const customTimeParser  = d3.timeParse("%d%b%Y")
-  const sortByDate = ( a,b ) => {
-    // console.log("a:", a.date, "b:", b.date, a.date < b.date ? -1 : a.date > b.date ? 1 : 0)
-    return a.date < b.date ? -1 : a.date > b.date ? 1 : 0
+  const sortByDate = ( a,b, debug=false ) => {
+    const aDate = new Date(a).getTime()
+    const bDate = new Date(b).getTime()
+    if (debug) {
+      console.log("a:", aDate)
+      console.log("b:", bDate)
+      console.log("compare:", aDate < bDate ? -1 : aDate > bDate ? 1 : 0)
+    }
+    return aDate < bDate ? -1 : aDate > bDate ? 1 : 0
   }
 
-  const certificationDict = DFC.sort(d3.ascending).reduce((acc,val)=>{
-    const certDate = customTimeParser( val['Certification Date'] )
-    acc[certDate] = acc[certDate] === undefined ? 1 : acc[certDate] += 1
-    return acc
-  }, {})
-  const certificationData = Object.keys(certificationDict).map((v, i)=>{
-    return {date: v, count: certificationDict[v]}
-  // }).sort(sortByDate)
+  console.log(DFC)
+  
+  // Sort data by date
+  const certificationSum = {}
+  DFC.sort((a,b) => sortByDate(
+      customTimeParser(a['Certification Date']),
+      customTimeParser(b['Certification Date']),
+
+  // Accumulate cumulative sum
+  )).forEach((value, index)=>{
+    const cDate = customTimeParser(value['Certification Date'])
+    certificationSum[cDate] = index + 1
   })
+  
+  const certificationData = Object.keys(certificationSum).map(key=>{
+    return {date:key, value: certificationSum[key]}
+  })
+
 
   console.log(certificationData)
 
