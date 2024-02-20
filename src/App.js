@@ -139,7 +139,6 @@ function App() {
   })
 
 
-  console.log(certificationData)
 
 
   return (
@@ -187,7 +186,7 @@ function App() {
       {/* Certifications over Time */}
       { !loading
         ? <TimeSeries 
-            data = {{}}
+            data = {certificationData}
             label = { "Certifications over Time" }
             dims = { dims }
           />

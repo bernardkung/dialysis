@@ -1,14 +1,15 @@
 import { useMemo } from "react";
-// import { ScaleLinear } from "d3";
+import * as d3 from "d3";
 
 
 export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition="bottom", numberOfTicksTarget, tickLength = 5}) => {
 
   const ticks = useMemo(() => {
     return xScale.ticks(numberOfTicksTarget).map((value) => ({
-      value: value,
-      xOffset: xScale(value),
-    }))
+        value: value instanceof Date ? d3.utcFormat("%Y")(value) : value,
+        xOffset: xScale(value),
+      }
+    ))
   }, [xScale]);
 
   const axisOffset      = axisPosition=="bottom" ? dims.height - dims.padding.bottom - 13 : dims.padding.top
@@ -16,6 +17,12 @@ export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition="bottom",
   const tickVector      = axisPosition=="bottom" ? tickLength : -tickLength
   const textTransform   = axisPosition=="bottom" ? `18px` : `-12px`
   const titleOffset     = axisPosition=="bottom" ? axisOffset+32 : axisOffset-32
+
+  // console.log(axisLabel, ticks[0]['value'], ticks[0]['value'] instanceof Date)
+  console.log(axisLabel, ticks)
+
+
+
   return (
     <g className={`axis horizontal ${axisPosition}`}>
       {/* Main horizontal line */}
