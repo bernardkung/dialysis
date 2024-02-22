@@ -1,5 +1,5 @@
 
-const Tooltip = ({ data, name, pos }) => {
+export const Tooltip = ({ data, name, pos }) => {
   if (!data) {
     return null;
   }

@@ -77,4 +77,5 @@ const TimeSeries = ({ data, label, dims, colors, area=true }) => {
     </div>
   )
 }
+
 export default TimeSeries

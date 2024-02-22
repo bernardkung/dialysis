@@ -1,4 +1,4 @@
-export const Bar = ({x, y, xScale, yScale})=>{
+const Bar = ({x, y, xScale, yScale, onMouseEnter, onMouseLeave })=>{
 
   return (
   <g key={y + "Stars"} className={"bar"}>
@@ -13,6 +13,8 @@ export const Bar = ({x, y, xScale, yScale})=>{
       fill="#9d174d"
       fillOpacity={0.3}
       strokeWidth={1}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
     />
     <text
       key={y + "StarsValue"}
@@ -41,5 +43,6 @@ export const Bar = ({x, y, xScale, yScale})=>{
 
   </g>  
   )
-
 }
+
+export default Bar
