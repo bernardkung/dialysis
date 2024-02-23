@@ -1,11 +1,11 @@
-const Bar = ({x, y, xScale, yScale, onMouseEnter, onMouseLeave })=>{
-
+const Bar = ({x, y, d, xScale, yScale, onMouseEnter, onMouseLeave })=>{
+  console.log('y2:', y, parseInt(y), yScale(y), yScale(parseInt(y)))
   return (
   <g key={y + "Stars"} className={"bar"}>
     <rect 
       key={y + "StarsBar"}
       x={xScale(0)}
-      y={yScale(parseInt(y))}
+      y={yScale(y)}
       width={xScale(x)-xScale(0)}
       height={yScale.bandwidth()}
       opacity={0.7}
@@ -13,13 +13,13 @@ const Bar = ({x, y, xScale, yScale, onMouseEnter, onMouseLeave })=>{
       fill="#9d174d"
       fillOpacity={0.3}
       strokeWidth={1}
-      onMouseEnter={onMouseEnter}
+      onMouseEnter={e=>onMouseEnter(e, d)}
       onMouseLeave={onMouseLeave}
     />
     <text
       key={y + "StarsValue"}
       x={ xScale(x) - 13 }
-      y={ yScale(parseInt(y)) + yScale.bandwidth() / 2 }
+      y={ yScale(y) + yScale.bandwidth() / 2 }
       textAnchor="end"
       alignmentBaseline="central"
       fontSize={12}
@@ -31,7 +31,7 @@ const Bar = ({x, y, xScale, yScale, onMouseEnter, onMouseLeave })=>{
     <text
       key={y + "StarsLabel"}
       x={ xScale.range()[0] + 13}
-      y={ yScale(parseInt(y)) + yScale.bandwidth() / 2 }
+      y={ yScale(y) + yScale.bandwidth() / 2 }
       textAnchor="base"
       alignmentBaseline="central"
       fontSize={14}

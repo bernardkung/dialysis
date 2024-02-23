@@ -4,7 +4,7 @@ import { useMemo } from "react";
 const PieChart = ({ data, label, dims, colors }) => {
 
   // Compute a pie generator = a function that transforms a dataset in a list of arcs
-  const pieGenerator = d3.pie().value((d) => d.value)
+  const pieGenerator = d3.pie().value((d) => d.y)
   
   // Use this pie generator on our initial dataset
   const pie = pieGenerator(data)

@@ -66,6 +66,12 @@ function App() {
 
 
   //// DATA /////////////////////////////////////
+  function dataMap(obj) {
+    return Object.keys(obj).map(key=>{
+      return { x:key, y:obj[key] }
+    })
+  }
+
   // Star Distribution
   const starCounts = {}
   ICH_CAHPS
@@ -74,6 +80,7 @@ function App() {
       const starRating = i['Star rating of the dialysis facility']
       starCounts[starRating] =  starCounts[starRating] ? starCounts[starRating] + 1 : 1
     })
+  const starData  = dataMap(starCounts)
 
   // Ownership Distribution
   const ownershipCounts = {}
@@ -83,9 +90,10 @@ function App() {
       ownershipCounts[owner] = ownershipCounts[owner] ? ownershipCounts[owner] + 1 : 1
       
     })
-  const ownershipData = Object.keys(ownershipCounts).map(key=>{
-    return {owner:key, value: ownershipCounts[key]}
-  })
+  // const ownershipData = Object.keys(ownershipCounts).map(key=>{
+  //   return {owner:key, value: ownershipCounts[key]}
+  // })
+  const ownershipData = dataMap(ownershipCounts)
 
   // Survival x Mortality
   const survivalMortalityData = QIP.map( (q, i)=>{
@@ -196,7 +204,10 @@ function App() {
       {/* Facilities per Star Rating */}
       { !loading 
         ? <BarChart 
-            data = {starCounts}
+            data = { starData }
+            xVar = { "y" } 
+            yVar = { "x" }
+            orient = { "horizontal" }
             label = { "Facilities per Star Rating" }
             dims = { dims }
           /> 
