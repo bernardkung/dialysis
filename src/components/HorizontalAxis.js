@@ -18,10 +18,6 @@ export const HorizontalAxis = ({ xScale, dims, axisLabel, axisPosition="bottom",
   const textTransform   = axisPosition=="bottom" ? `18px` : `-12px`
   const titleOffset     = axisPosition=="bottom" ? axisOffset+32 : axisOffset-32
 
-  // console.log(axisLabel, ticks[0]['value'], ticks[0]['value'] instanceof Date)
-  console.log(axisLabel, ticks)
-
-
 
   return (
     <g className={`axis horizontal ${axisPosition}`}>

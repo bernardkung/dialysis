@@ -1,17 +1,18 @@
 
-export const Tooltip = ({ data, name, pos }) => {
+export const Tooltip = ({ data, name }) => {
   if (!data) {
     return null;
   }
+
   return (
     <div
-      className={name}
+      className={"tooltip"}
       style={{
-        left: pos.x,
-        top: pos.y, 
+        left: data['xPos'],
+        top: data['xPos'], 
       }}
     >
-      { data.name }
+      { "x" }
     </div>
   )
 }

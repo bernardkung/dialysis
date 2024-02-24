@@ -1,5 +1,5 @@
 const Bar = ({x, y, d, xScale, yScale, onMouseEnter, onMouseLeave })=>{
-  console.log('y2:', y, parseInt(y), yScale(y), yScale(parseInt(y)))
+  
   return (
   <g key={y + "Stars"} className={"bar"}>
     <rect 

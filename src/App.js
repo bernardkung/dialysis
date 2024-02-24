@@ -128,7 +128,6 @@ function App() {
     return aDate < bDate ? -1 : aDate > bDate ? 1 : 0
   }
 
-  console.log(DFC)
   
   // Sort data by date
   const certificationSum = {}

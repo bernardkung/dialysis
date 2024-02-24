@@ -29,12 +29,12 @@ const BarChart = ({ data, xVar, yVar, orient="horizontal", label, dims }) => {
   }, [data, dims])
   
   const onMouseEnter = (e, d)=>{
-    console.log(d)
-    // setTooltipData({
-    //   xPos: xScale(d.x),
-    //   yPos: yScale(d.y),
-    //   name: d.subGroup,
-    // })
+    console.log("d:", d, d.y, yScale(d.x), yDomain[0])
+    setTooltipData({
+      xPos: xScale(d.x),
+      yPos: yScale(d[yVar]),
+      name: "tooltip",
+    })
   }
 
   const onMouseLeave = (e)=>{
@@ -62,7 +62,7 @@ const BarChart = ({ data, xVar, yVar, orient="horizontal", label, dims }) => {
 
 
         <HorizontalAxis scale={xScale} xScale={xScale} axisLabel={"# of Facilities"} dims={dims} numberOfTicksTarget={10}/>
-        <Tooltip />
+        <Tooltip data={tooltipData}/>
       </svg>
 
     </div>
